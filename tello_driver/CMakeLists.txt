@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 project(tello_driver)
 
+include_directories(/opt/ros/humble/include)
+
 #=============
 # Setup
 #=============
@@ -72,6 +74,7 @@ set(DRIVER_NODE_DEPS
   geometry_msgs
   OpenCV
   rclcpp
+  rclcpp_components
   ros2_shared
   sensor_msgs
   std_msgs
@@ -109,7 +112,8 @@ target_compile_definitions(tello_driver_node
 
 add_executable(tello_emulator src/tello_emulator.cpp)
 
-ament_target_dependencies(tello_emulator)
+ament_target_dependencies(tello_emulator
+  rclcpp rclcpp_components ros2_shared)
 
 target_compile_definitions(tello_emulator
   PRIVATE ASIO_STANDALONE
@@ -126,6 +130,7 @@ set(JOY_NODE_DEPS
   class_loader
   geometry_msgs
   rclcpp
+  rclcpp_components
   sensor_msgs
   tello_msgs)
 
@@ -142,7 +147,7 @@ rclcpp_components_register_nodes(tello_joy_node "tello_joy::TelloJoyNode")
 set(node_plugins "${node_plugins}tello_joy::TelloJoyNode;$<TARGET_FILE:tello_joy_node>\n")
 
 #=============
-# Export incantations, see https://github.com/ros2/demos/blob/master/composition/CMakeLists.txt
+# Export incantations
 #=============
 
 if (NOT WIN32)
@@ -206,8 +211,22 @@ install(
   DESTINATION share/${PROJECT_NAME}
 )
 
+# Install node for keyboardcontroller
+add_executable(keyboard_controller src/keyboard_controller.cpp)
+ament_target_dependencies(keyboard_controller rclcpp tello_msgs geometry_msgs)
+
+install(
+  TARGETS keyboard_controller
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+
 #=============
 # Run ament macros
 #=============
 
 ament_package()
+
+# Suppress dev warnings
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-dev")
+

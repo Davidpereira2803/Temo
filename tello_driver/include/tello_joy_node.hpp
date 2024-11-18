@@ -11,12 +11,12 @@ namespace tello_joy
   // -- ignore all responses
 
   // XBox One constants
-  constexpr int JOY_AXIS_LEFT_LR = 0;       // Left stick left/right; 1.0 is left and -1.0 is right
-  constexpr int JOY_AXIS_LEFT_FB = 1;       // Left stick forward/back; 1.0 is forward and -1.0 is back
-  constexpr int JOY_AXIS_RIGHT_LR = 3;      // Right stick left/right; 1.0 is left and -1.0 is right
-  constexpr int JOY_AXIS_RIGHT_FB = 4;      // Right stick forward/back; 1.0 is forward and -1.0 is back
-  constexpr int JOY_BUTTON_VIEW = 6;        // View button
-  constexpr int JOY_BUTTON_MENU = 7;        // Menu button
+  constexpr int JOY_AXIS_LEFT_LR = 0;       //0 Left stick left/right; 1.0 is left and -1.0 is right
+  constexpr int JOY_AXIS_LEFT_FB = 1;       //1 Left stick forward/back; 1.0 is forward and -1.0 is back
+  constexpr int JOY_AXIS_RIGHT_LR = 2;      //3 Right stick left/right; 1.0 is left and -1.0 is right
+  constexpr int JOY_AXIS_RIGHT_FB = 5;      //4 Right stick forward/back; 1.0 is forward and -1.0 is back
+  constexpr int JOY_BUTTON_VIEW = 3;        //6 View button
+  constexpr int JOY_BUTTON_MENU = 9;        //7 Menu button
 
   class TelloJoyNode : public rclcpp::Node
   {
